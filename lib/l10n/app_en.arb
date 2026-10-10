@@ -1,0 +1,38 @@
+{
+  "@@locale": "en",
+  "appTitle": "Kriptan",
+  "languageCode": "EN",
+  "actionToggleTheme": "Switch theme",
+  "actionToggleLanguage": "Switch language",
+  "actionClearSearch": "Clear search",
+  "searchHint": "Search by name or ticker",
+  "nothingFound": "Nothing found",
+  "headerCoin": "Coin / Volume",
+  "headerPrice": "Price",
+  "headerChange": "24h change",
+  "rank": "Rank #{rank}",
+  "@rank": {
+    "placeholders": {
+      "rank": {"type": "int"}
+    }
+  },
+  "sectionMarket": "Market",
+  "marketCap": "Market cap",
+  "volume24h": "24h volume",
+  "high24h": "24h high",
+  "low24h": "24h low",
+  "allTimeHigh": "All-time high",
+  "sectionSupply": "Supply",
+  "circulatingSupply": "Circulating",
+  "totalSupply": "Total",
+  "maxSupply": "Max",
+  "sectionNeighbours": "Next in ranking",
+  "lastUpdated": "Updated {dateTime}",
+  "@lastUpdated": {
+    "placeholders": {
+      "dateTime": {"type": "String"}
+    }
+  },
+  "coinNotFound": "Coin not found",
+  "pageNotFound": "Page not found"
+}
