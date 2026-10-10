@@ -1,17 +1,28 @@
-# kriptan
+# Kriptan (Flutter)
 
-A new Flutter project.
+Каталог криптовалют: список монет с поиском и экран монеты. Лабораторные работы по курсу
+«Кроссплатформенная разработка», трек Flutter. Данные — моки, снятые с CoinGecko
+(`/coins/markets`), сети нет.
 
-## Getting Started
+Flutter 3.47, flutter_bloc (Cubit), go_router, локализация через ARB (ru/en).
 
-This project is a starting point for a Flutter application.
+## Запуск
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+flutter pub get               # заодно генерирует lib/l10n/app_localizations.dart
+flutter run -d chrome         # браузер
+flutter run -d macos          # второй таргет
+dart run tool/check_arb.dart  # сверка ключей ru/en
+```
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Структура
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```
+lib/
+  main.dart, app.dart
+  common/         navigation/, theme/, locale/, widgets/
+  features/coin/
+    data/         моки и реализация репозитория
+    domain/       модель и интерфейс репозитория
+    presentation/ bloc/, view/, view/widgets/, utils/
+```
