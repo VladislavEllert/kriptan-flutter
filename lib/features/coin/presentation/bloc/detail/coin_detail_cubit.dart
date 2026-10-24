@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kriptan/features/coin/domain/coin_model.dart';
 import 'package:kriptan/features/coin/domain/i_coin_repository.dart';
 import 'package:kriptan/features/coin/presentation/bloc/detail/coin_detail_state.dart';
 
@@ -17,15 +18,18 @@ class CoinDetailCubit extends Cubit<CoinDetailState> {
 
     final coins = await _repository.getCoins();
     if (isClosed) return;
-    final index = coins.indexWhere((other) => other.id == coinId);
     emit(
-      CoinDetailLoaded(
-        coin: coin,
-        neighbours: [
-          if (index > 0) coins[index - 1],
-          if (index < coins.length - 1) coins[index + 1],
-        ],
-      ),
+      CoinDetailLoaded(coin: coin, neighbours: _rankNeighbours(coin, coins)),
     );
+  }
+
+  // Looked up by marketCapRank, not by list position: the repository
+  // does not promise any order of getCoins().
+  List<CoinModel> _rankNeighbours(CoinModel coin, List<CoinModel> coins) {
+    final rank = coin.marketCapRank;
+    if (rank == null) return [];
+    final above = coins.where((other) => other.marketCapRank == rank - 1);
+    final below = coins.where((other) => other.marketCapRank == rank + 1);
+    return [...above.take(1), ...below.take(1)];
   }
 }
