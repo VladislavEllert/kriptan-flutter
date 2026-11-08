@@ -1,0 +1,11 @@
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          # The app only reads data, toJson is not needed.
+          create_to_json: false
+          # A response of the wrong shape throws CheckedFromJsonException with
+          # the field name instead of a bare TypeError.
+          checked: true
+          field_rename: snake
