@@ -1,5 +1,4 @@
 import 'package:intl/intl.dart';
-import 'package:kriptan/common/theme/image_sources.dart';
 import 'package:kriptan/features/coin/domain/coin_model.dart';
 
 const String _noValue = '—';
@@ -8,8 +7,6 @@ const String _noValue = '—';
 const String _numberLocale = 'en_US';
 
 extension CoinFormat on CoinModel {
-  String get logo => ImageSources.coinLogo(id);
-
   String get displaySymbol => symbol.toUpperCase();
 
   String get displayPrice => _formatPrice(currentPrice);

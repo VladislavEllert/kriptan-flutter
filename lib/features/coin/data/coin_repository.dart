@@ -1,30 +1,23 @@
-import 'package:kriptan/features/coin/data/mock_coins.dart';
+import 'package:kriptan/features/coin/data/data_sources/i_coin_data_source.dart';
+import 'package:kriptan/features/coin/data/mappers/coin_mapper.dart';
 import 'package:kriptan/features/coin/domain/coin_model.dart';
 import 'package:kriptan/features/coin/domain/i_coin_repository.dart';
 
 final class CoinRepository implements ICoinRepository {
-  const CoinRepository();
+  const CoinRepository(this._dataSource);
+
+  final ICoinDataSource _dataSource;
 
   @override
-  Future<List<CoinModel>> getCoins() async => mockCoins;
-
-  @override
-  Future<CoinModel?> getCoin(String id) async {
-    for (final coin in mockCoins) {
-      if (coin.id == id) return coin;
-    }
-    return null;
+  Future<List<CoinModel>> getCoins({
+    required int page,
+    required int perPage,
+  }) async {
+    final dtos = await _dataSource.getMarkets(page: page, perPage: perPage);
+    return dtos.map((dto) => dto.toModel()).toList();
   }
 
   @override
-  Future<List<CoinModel>> searchCoins(String query) async {
-    final text = query.trim().toLowerCase();
-    return mockCoins
-        .where(
-          (coin) =>
-              coin.name.toLowerCase().contains(text) ||
-              coin.symbol.toLowerCase().contains(text),
-        )
-        .toList();
-  }
+  Future<CoinModel> getCoin(String id) async =>
+      (await _dataSource.getCoin(id)).toModel();
 }

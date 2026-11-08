@@ -24,5 +24,11 @@
   "sectionNeighbours": "Соседи по рейтингу",
   "lastUpdated": "Обновлено {dateTime}",
   "coinNotFound": "Монета не найдена",
-  "pageNotFound": "Страница не найдена"
+  "pageNotFound": "Страница не найдена",
+  "actionRetry": "Повторить",
+  "errorNoConnection": "Нет связи с сервером. Проверьте сеть и повторите.",
+  "errorTimeout": "Сервер слишком долго не отвечает.",
+  "errorTooManyRequests": "Слишком много запросов к CoinGecko. Подождите минуту и повторите.",
+  "errorServer": "Ошибка сервера ({code}).",
+  "errorBadResponse": "Сервер прислал данные в неожиданном формате."
 }

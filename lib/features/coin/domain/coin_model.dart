@@ -3,6 +3,7 @@ final class CoinModel {
     required this.id,
     required this.symbol,
     required this.name,
+    required this.image,
     required this.currentPrice,
     required this.marketCap,
     required this.marketCapRank,
@@ -21,6 +22,7 @@ final class CoinModel {
   final String id;
   final String symbol;
   final String name;
+  final String image;
   final double currentPrice;
   final int marketCap;
   final int? marketCapRank;
