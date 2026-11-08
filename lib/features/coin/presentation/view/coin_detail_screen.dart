@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kriptan/common/theme/app_theme.dart';
 import 'package:kriptan/common/widgets/app_scaffold.dart';
+import 'package:kriptan/common/widgets/load_error_view.dart';
 import 'package:kriptan/features/coin/domain/coin_model.dart';
 import 'package:kriptan/features/coin/domain/i_coin_repository.dart';
 import 'package:kriptan/features/coin/presentation/bloc/detail/coin_detail_cubit.dart';
@@ -23,16 +24,21 @@ class CoinDetailScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     return BlocProvider(
       create: (context) =>
-          CoinDetailCubit(context.read<ICoinRepository>())..load(coinId),
+          CoinDetailCubit(context.read<ICoinRepository>(), coinId)..load(),
       child: BlocBuilder<CoinDetailCubit, CoinDetailState>(
         builder: (context, state) => switch (state) {
           CoinDetailLoading() => AppScaffold(
             title: l10n.appTitle,
             body: const Center(child: CircularProgressIndicator()),
           ),
-          CoinDetailNotFound() => AppScaffold(
+          CoinDetailFailure(:final error) => AppScaffold(
             title: l10n.appTitle,
-            body: Center(child: Text(l10n.coinNotFound)),
+            body: Center(
+              child: LoadErrorView(
+                error: error,
+                onRetry: context.read<CoinDetailCubit>().load,
+              ),
+            ),
           ),
           CoinDetailLoaded(:final coin, :final neighbours) => AppScaffold(
             title: coin.name,
@@ -128,12 +134,14 @@ class _CoinDetails extends StatelessWidget {
                   InfoRow(label: l10n.maxSupply, value: coin.displayMaxSupply),
                 ],
               ),
-              InfoSection(
-                title: l10n.sectionNeighbours,
-                children: [
-                  for (final neighbour in neighbours) CoinRow(coin: neighbour),
-                ],
-              ),
+              if (neighbours.isNotEmpty)
+                InfoSection(
+                  title: l10n.sectionNeighbours,
+                  children: [
+                    for (final neighbour in neighbours)
+                      CoinRow(coin: neighbour),
+                  ],
+                ),
               Text(
                 l10n.lastUpdated(coin.displayLastUpdated),
                 style: theme.textTheme.bodySmall?.copyWith(
