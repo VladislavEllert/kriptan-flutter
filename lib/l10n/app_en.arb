@@ -34,5 +34,16 @@
     }
   },
   "coinNotFound": "Coin not found",
-  "pageNotFound": "Page not found"
+  "pageNotFound": "Page not found",
+  "actionRetry": "Retry",
+  "errorNoConnection": "No connection to the server. Check the network and try again.",
+  "errorTimeout": "The server is taking too long to respond.",
+  "errorTooManyRequests": "Too many requests to CoinGecko. Wait a minute and try again.",
+  "errorServer": "Server error ({code}).",
+  "@errorServer": {
+    "placeholders": {
+      "code": {"type": "String"}
+    }
+  },
+  "errorBadResponse": "The server sent data in an unexpected format."
 }
