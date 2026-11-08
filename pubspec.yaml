@@ -29,5 +29,13 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
-  assets:
-    - assets/coins/
+  # Bundled so that the web build does not fetch Roboto from fonts.gstatic.com:
+  # without network the error screen would have no Cyrillic glyphs.
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700
