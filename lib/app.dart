@@ -1,21 +1,27 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kriptan/common/locale/locale_cubit.dart';
 import 'package:kriptan/common/navigation/app_router.dart';
 import 'package:kriptan/common/theme/app_theme.dart';
 import 'package:kriptan/common/theme/theme_cubit.dart';
+import 'package:kriptan/features/coin/data/api/coin_api.dart';
 import 'package:kriptan/features/coin/data/coin_repository.dart';
+import 'package:kriptan/features/coin/data/data_sources/network_coin_data_source.dart';
 import 'package:kriptan/features/coin/domain/i_coin_repository.dart';
 import 'package:kriptan/features/coin/presentation/bloc/list/coin_list_cubit.dart';
 import 'package:kriptan/l10n/app_localizations.dart';
 
 class App extends StatelessWidget {
-  const App({super.key});
+  const App({super.key, required this.dio});
+
+  // Created once in main(): one connection pool and one base URL for the app.
+  final Dio dio;
 
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider<ICoinRepository>(
-      create: (context) => const CoinRepository(),
+      create: (context) => CoinRepository(NetworkCoinDataSource(CoinApi(dio))),
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
